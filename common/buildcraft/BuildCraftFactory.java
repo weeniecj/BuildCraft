@@ -14,6 +14,7 @@ import buildcraft.factory.BlockAutoWorkbench;
 import buildcraft.factory.BlockFloodGate;
 import buildcraft.factory.BlockFrame;
 import buildcraft.factory.BlockHopper;
+import buildcraft.factory.BlockLeacher;
 import buildcraft.factory.BlockMiningWell;
 import buildcraft.factory.BlockPlainPipe;
 import buildcraft.factory.BlockPump;
@@ -75,6 +76,7 @@ public class BuildCraftFactory {
 	public static BlockTank tankBlock;
 	public static BlockRefinery refineryBlock;
 	public static BlockHopper hopperBlock;
+	public static BlockLeacher leacherBlock;
 	public static boolean hopperDisabled;
 	public static boolean allowMining = true;
 	public static PumpDimensionList pumpDimensionList;
@@ -164,6 +166,7 @@ public class BuildCraftFactory {
 		int tankId = BuildCraftCore.mainConfiguration.getBlock("tank.id", DefaultProps.TANK_ID).getInt(DefaultProps.TANK_ID);
 		int refineryId = BuildCraftCore.mainConfiguration.getBlock("refinery.id", DefaultProps.REFINERY_ID).getInt(DefaultProps.REFINERY_ID);
 		int hopperId = BuildCraftCore.mainConfiguration.getBlock("hopper.id", DefaultProps.HOPPER_ID).getInt(DefaultProps.HOPPER_ID);
+		int leacherId = BuildCraftCore.mainConfiguration.getBlock("leacher.id", DefaultProps.LEACHER_ID).getInt(DefaultProps.LEACHER_ID);
 
 		if (BuildCraftCore.mainConfiguration.hasChanged()) {
 			BuildCraftCore.mainConfiguration.save();
@@ -218,6 +221,11 @@ public class BuildCraftFactory {
 			hopperBlock = new BlockHopper(hopperId);
 			CoreProxy.proxy.registerBlock(hopperBlock.setUnlocalizedName("blockHopper"));
 			CoreProxy.proxy.addName(hopperBlock, "Hopper");
+		}
+		if (leacherId > 0) {
+			leacherBlock = new BlockLeacher(leacherId);
+			CoreProxy.proxy.registerBlock(leacherBlock.setUnlocalizedName("blockLeacher"));
+			CoreProxy.proxy.addName(leacherBlock, "Leacher");
 		}
 
 		FactoryProxy.proxy.initializeEntityRenders();
@@ -316,6 +324,14 @@ public class BuildCraftFactory {
 					'T', tankBlock != null ? tankBlock : Block.glass,
 					'G', BuildCraftCore.ironGearItem,
 					'F', new ItemStack(Block.fenceIron));
+		
+		if (leacherBlock != null)
+			CoreProxy.proxy.addCraftingRecipe(new ItemStack(leacherBlock),
+					"R R",
+					"IGI",
+					'I', Item.ingotIron,
+					'G', Block.glass,
+					'R', BuildCraftCore.ironGearItem);
 	}
 
 	@ForgeSubscribe
