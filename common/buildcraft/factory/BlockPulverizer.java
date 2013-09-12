@@ -34,19 +34,17 @@ public class BlockPulverizer extends BlockContainer {
 
 	@Override
 	public Icon getIcon(int i, int j) {
-		
-		// If no metadata is set, then this is an icon.
-		if (j == 0 && i == 3)
-			return textureFrontBack;
-
-		if (i == j && i>1) // Front can't be top or bottom.
-			return textureFrontBack;
-
 		switch (i) {
+		case 0:
+			return textureTopBottom;
 		case 1:
 			return textureTopBottom;
-		default:
+		case 4:
 			return textureSide;
+		case 5:
+			return textureSide;
+		default:
+			return textureFrontBack;
 		}
 	}
 
