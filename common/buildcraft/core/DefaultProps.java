@@ -117,6 +117,7 @@ public class DefaultProps {
 	public static int FILTERED_BUFFER_ID = 1523;
 	public static int FLOOD_GATE_ID = 1524;
 	public static int LEACHER_ID = 1525;
+	public static final int PULVERIZER_ID = 1526;
 	
 	public static int OIL_ID = 1530;
 	public static int FUEL_ID = 1531;

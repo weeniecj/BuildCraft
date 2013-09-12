@@ -17,6 +17,7 @@ import buildcraft.factory.BlockHopper;
 import buildcraft.factory.BlockLeacher;
 import buildcraft.factory.BlockMiningWell;
 import buildcraft.factory.BlockPlainPipe;
+import buildcraft.factory.BlockPulverizer;
 import buildcraft.factory.BlockPump;
 import buildcraft.factory.BlockQuarry;
 import buildcraft.factory.BlockRefinery;
@@ -77,6 +78,7 @@ public class BuildCraftFactory {
 	public static BlockRefinery refineryBlock;
 	public static BlockHopper hopperBlock;
 	public static BlockLeacher leacherBlock;
+	public static BlockPulverizer pulverizerBlock;
 	public static boolean hopperDisabled;
 	public static boolean allowMining = true;
 	public static PumpDimensionList pumpDimensionList;
@@ -167,6 +169,7 @@ public class BuildCraftFactory {
 		int refineryId = BuildCraftCore.mainConfiguration.getBlock("refinery.id", DefaultProps.REFINERY_ID).getInt(DefaultProps.REFINERY_ID);
 		int hopperId = BuildCraftCore.mainConfiguration.getBlock("hopper.id", DefaultProps.HOPPER_ID).getInt(DefaultProps.HOPPER_ID);
 		int leacherId = BuildCraftCore.mainConfiguration.getBlock("leacher.id", DefaultProps.LEACHER_ID).getInt(DefaultProps.LEACHER_ID);
+		int pulverizerId = BuildCraftCore.mainConfiguration.getBlock("pulverizer.id", DefaultProps.PULVERIZER_ID).getInt(DefaultProps.PULVERIZER_ID);
 
 		if (BuildCraftCore.mainConfiguration.hasChanged()) {
 			BuildCraftCore.mainConfiguration.save();
@@ -226,6 +229,11 @@ public class BuildCraftFactory {
 			leacherBlock = new BlockLeacher(leacherId);
 			CoreProxy.proxy.registerBlock(leacherBlock.setUnlocalizedName("blockLeacher"));
 			CoreProxy.proxy.addName(leacherBlock, "Leacher");
+		}
+		if (pulverizerId > 0) {
+			pulverizerBlock = new BlockPulverizer(pulverizerId);
+			CoreProxy.proxy.registerBlock(pulverizerBlock.setUnlocalizedName("blockPulverizer"));
+			CoreProxy.proxy.addName(pulverizerBlock, "Pulverizer");
 		}
 
 		FactoryProxy.proxy.initializeEntityRenders();
@@ -331,6 +339,15 @@ public class BuildCraftFactory {
 					"IGI",
 					'I', Item.ingotIron,
 					'G', Block.glass,
+					'R', BuildCraftCore.ironGearItem);
+		
+		if (pulverizerBlock != null)
+			CoreProxy.proxy.addCraftingRecipe(new ItemStack(pulverizerBlock),
+					"IPI",
+					"IRI",
+					"IPI",
+					'I', Item.ingotIron,
+					'P', Block.pistonBase,
 					'R', BuildCraftCore.ironGearItem);
 	}
 
